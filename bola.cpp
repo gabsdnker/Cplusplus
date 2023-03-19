@@ -1,6 +1,5 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
-
 const int SCREEN_WIDTH = 900;
 const int SCREEN_HEIGHT = 450;
 const int BORDA = 10;
@@ -8,7 +7,6 @@ const int BORDA = 10;
 void DrawCircle(SDL_Renderer * renderer, int32_t centreX, int32_t centreY, int32_t radius)
 {
    const int32_t diameter = (radius * 2);
-
    int32_t x = (radius - 1);
    int32_t y = 0;
    int32_t tx = 1;
@@ -16,7 +14,6 @@ void DrawCircle(SDL_Renderer * renderer, int32_t centreX, int32_t centreY, int32
    int32_t error = (tx - diameter);
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-
    while (x >= y)
    {
       //  Each of the following renders an octant of the circle
@@ -28,14 +25,12 @@ void DrawCircle(SDL_Renderer * renderer, int32_t centreX, int32_t centreY, int32
       SDL_RenderDrawPoint(renderer, centreX + y, centreY + x);
       SDL_RenderDrawPoint(renderer, centreX - y, centreY - x);
       SDL_RenderDrawPoint(renderer, centreX - y, centreY + x);
-
       if (error <= 0)
       {
          ++y;
          error += ty;
          ty += 2;
       }
-
       if (error > 0)
       {
          --x;
@@ -44,7 +39,6 @@ void DrawCircle(SDL_Renderer * renderer, int32_t centreX, int32_t centreY, int32
       }
    }
 }
-
 int main( int argc, char* args[] )
 {
     SDL_Window* window = NULL;
@@ -56,7 +50,6 @@ int main( int argc, char* args[] )
     double vy = -5 / 10.0;
     double ax = 0;
     double ay = 5 / 20000.0; 
-
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
         printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
@@ -74,8 +67,6 @@ int main( int argc, char* args[] )
             renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
             if (renderer == NULL)
                 printf("Erro! - criando renderer");
-
-
             bool acabou = false;
             for (;!acabou;)
             {
@@ -88,12 +79,11 @@ int main( int argc, char* args[] )
                 SDL_SetRenderDrawColor(renderer, 0, 100, 0, 0);
                 SDL_RenderClear(renderer);
                 DrawCircle(renderer, rx, ry, 20);
-
                 rx = rx + vx;
                 ry = ry + vy;
                 vx = vx + ax;
                 vy = vy + ay;
-                
+        
                 SDL_SetRenderDrawColor(renderer, 139, 69, 19, SDL_ALPHA_OPAQUE);
                 SDL_RenderDrawLine(renderer, 0 + BORDA, 0 + BORDA, SCREEN_WIDTH - BORDA, 0 + BORDA);
                 SDL_RenderDrawLine(renderer, SCREEN_WIDTH - BORDA, 0 + BORDA, SCREEN_WIDTH - BORDA, SCREEN_HEIGHT - BORDA);
@@ -106,6 +96,5 @@ int main( int argc, char* args[] )
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow( window );
     SDL_Quit();
-
     return 0;
 }
